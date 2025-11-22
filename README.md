@@ -70,7 +70,6 @@ I've provided 6 comprehensive artifacts:
 
 ## 🚀 Quick Start
 
-### Backend
 ```bash
 cd backend
 python -m venv venv
