@@ -3,6 +3,8 @@ import { useAuth } from '../context/AuthContext';
 import { postAPI } from '../services/api';
 import CreatePost from '../components/CreatePost';
 import Post from '../components/Post';
+import Header from '../components/Header';
+
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -52,26 +54,7 @@ const Feed = () => {
     <div className="_layout _layout_main_wrapper">
       <div className="_main_layout">
         {/* Header Navigation */}
-        <nav className="navbar navbar-expand-lg navbar-light _header_nav _padd_t10">
-          <div className="container _custom_container">
-            <div className="_logo_wrap">
-              <a className="navbar-brand" href="/feed">
-                <img src="/assets/images/logo.svg" alt="Logo" className="_nav_logo" />
-              </a>
-            </div>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <div className="_header_nav_profile" style={{ marginLeft: 'auto' }}>
-                <div className="_header_nav_dropdown">
-                  <p className="_header_nav_para">{user?.full_name}</p>
-                  <button className="_header_nav_dropdown_btn" onClick={logout}>
-                    Logout
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
-
+        <Header />
         {/* Main Content */}
         <div className="container _custom_container">
           <div className="_layout_inner_wrap">

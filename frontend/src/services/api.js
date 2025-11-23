@@ -61,12 +61,26 @@ export const authAPI = {
   register: (userData) => api.post('/auth/register/', userData),
   login: (credentials) => api.post('/auth/login/', credentials),
   getProfile: () => api.get('/auth/profile/'),
+  updateProfile: (userData) => {
+    const formData = new FormData();
+    for (const key in userData) {
+      if (userData[key] !== null && userData[key] !== undefined) {
+        formData.append(key, userData[key]);
+      }
+    }
+    return api.patch('/auth/profile/', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  getUserById: (userId) => api.get(`/auth/users/${userId}/`),
+  searchUsers: (query) => api.get(`/auth/users/search/?q=${query}`),
 };
 
 // Post APIs
 export const postAPI = {
   getPosts: (page = 1) => api.get(`/posts/?page=${page}`),
   getPost: (id) => api.get(`/posts/${id}/`),
+  getUserPosts: (userId, page = 1) => api.get(`/posts/?author=${userId}&page=${page}`),
   createPost: (postData) => {
     const formData = new FormData();
     formData.append('content', postData.content);
@@ -91,6 +105,16 @@ export const commentAPI = {
   updateComment: (id, content) => api.patch(`/posts/comments/${id}/`, { content }),
   deleteComment: (id) => api.delete(`/posts/comments/${id}/`),
   toggleLike: (id) => api.post(`/posts/comments/${id}/like/`),
+};
+
+// Friend APIs
+export const friendAPI = {
+  getFriends: () => api.get('/auth/friends/'),
+  getFriendRequests: () => api.get('/auth/friend-requests/'),
+  sendFriendRequest: (userId) => api.post(`/auth/friend-requests/send/${userId}/`),
+  respondToRequest: (friendshipId, action) => 
+    api.post(`/auth/friend-requests/${friendshipId}/respond/`, { action }),
+  unfriend: (userId) => api.delete(`/auth/unfriend/${userId}/`),
 };
 
 export default api;
