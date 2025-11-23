@@ -34,7 +34,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at', 'likes_count',
             'replies_count', 'is_liked', 'likes', 'replies'
         )
-        read_only_fields = ('id', 'created_at', 'updated_at')
+        read_only_fields = ('id', 'created_at', 'updated_at', 'post')
 
     def get_is_liked(self, obj):
         request = self.context.get('request')
