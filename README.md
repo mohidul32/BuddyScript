@@ -1,6 +1,6 @@
 # BuddyScript
 
-A full-stack social media application built with **Django** (backend) and **React** (frontend), featuring authentication, feeds, posts, comments, likes, and more.
+A full-stack social media application built with **Django** (backend), **React** (frontend) and **MySQL** (database) featuring authentication, feeds, posts, comments, likes, and more.
 
 ---
 
@@ -55,20 +55,7 @@ A full-stack social media application built with **Django** (backend) and **Reac
 
 ---
 
-## 📁 What I've Created
-
-I've provided 6 comprehensive artifacts:
-
-1. **Setup Guide** - Complete installation instructions  
-2. **Backend Code** - Django models, serializers, views, URLs  
-3. **Frontend Core** - API services, Auth context, routing  
-4. **React Pages** - Login, Register pages  
-5. **Feed Components** - CreatePost, Post, Comment components  
-6. **Documentation** - Architecture, decisions, deployment guide  
-
----
-
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 cd backend
