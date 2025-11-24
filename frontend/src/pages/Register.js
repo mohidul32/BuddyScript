@@ -162,6 +162,7 @@ const Register = () => {
                           type="submit"
                           className="_social_registration_form_btn_link _btn1"
                           disabled={loading}
+                          style={{ whiteSpace: 'nowrap' }} // keep text in one line
                         >
                           {loading ? 'Registering...' : 'Register now'}
                         </button>
