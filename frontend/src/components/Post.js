@@ -72,10 +72,12 @@ const Post = ({ post, onUpdate, currentUser }) => {
       </div>
 
       <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
-        <div className="_feed_inner_timeline_total_reacts_image">
-          <p className="_feed_inner_timeline_total_reacts_para" style={{ cursor: 'pointer' }}>
+        <div className="_feed_inner_timeline_total_reacts_txt">
+          <p className="_feed_inner_timeline_total_reacts_para1" 
+           style={{ display: 'inline-block', cursor: 'pointer', padding: '4px 10px', borderRadius: '20px', backgroundColor: '#f0f2f5', color: '#385898', fontWeight: '500', fontSize: '14px' }}
+           >
             <span onClick={() => setShowLikes(!showLikes)}>
-              {post.likes_count} {post.likes_count === 1 ? 'Like' : 'Likes'}
+              {post.likes_count} Like{post.likes_count === 1 ? '' : 's'}
             </span>
           </p>
 
