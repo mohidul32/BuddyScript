@@ -58,6 +58,16 @@ const CreatePost = ({ onPostCreated }) => {
               onChange={(e) => setContent(e.target.value)}
               style={{ minHeight: '100px' }}
             />
+            <label 
+              htmlFor="floatingTextarea" 
+              style={{ 
+                textAlign: 'left', 
+                color: '#aaa',  // light gray color
+                paddingLeft: '0.75rem' // optional: align with textarea padding
+              }}
+            >
+              Write something ...
+            </label>
           </div>
         </div>
 
