@@ -15,16 +15,20 @@ const FindFriends = () => {
     setLoading(true);
     try {
       const response = await authAPI.searchUsers(searchQuery);
-      setSearchResults(response.data);
+
+      // Ensure searchResults is always an array
+      const results = Array.isArray(response.data) ? response.data : [];
+      setSearchResults(results);
 
       // Initialize friend statuses
       const statuses = {};
-      response.data.forEach(user => {
+      results.forEach(user => {
         statuses[user.id] = user.friendship_status;
       });
       setFriendStatuses(statuses);
     } catch (error) {
       console.error('Error searching users:', error);
+      setSearchResults([]); // fallback to empty array
     } finally {
       setLoading(false);
     }
