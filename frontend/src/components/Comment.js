@@ -46,106 +46,113 @@ const Comment = ({ comment, postId, onUpdate, currentUser, isReply = false }) =>
   };
 
   return (
-    <div className="_comment_main" style={{ marginLeft: isReply ? '40px' : '0' }}>
-      <div className="_comment_area">
-        <div className="_comment_details">
-          <div className="_comment_details_top">
-            <div className="_comment_name">
-              <h4 className="_comment_name_title">{comment.author.full_name}</h4>
-            </div>
-          </div>
-          <div className="_comment_status">
-            <p className="_comment_status_text">
-              <span>{comment.content}</span>
-            </p>
-          </div>
-          <div className="_total_reactions">
-            <div className="_total_react">
-              {comment.likes_count > 0 && (
-                <span
-                  className="_total"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => setShowLikes(!showLikes)}
-                >
-                  {comment.likes_count} {comment.likes_count === 1 ? 'Like' : 'Likes'}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {showLikes && comment.likes && comment.likes.length > 0 && (
-            <div style={{ marginTop: '5px', fontSize: '11px', color: '#666' }}>
-              Liked by: {comment.likes.map(like => like.user.full_name).join(', ')}
-            </div>
-          )}
-
-          <div className="_comment_reply">
-            <div className="_comment_reply_num">
-              <ul className="_comment_reply_list">
-                <li>
-                  <span
-                    style={{ cursor: 'pointer', color: comment.is_liked ? '#1890FF' : '#666' }}
-                    onClick={handleLike}
-                  >
-                    {comment.is_liked ? 'Liked' : 'Like'}
-                  </span>
-                </li>
-                {!isReply && (
-                  <li>
-                    <span
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => setShowReplyForm(!showReplyForm)}
-                    >
-                      Reply
-                    </span>
-                  </li>
-                )}
-                <li>
-                  <span className="_time_link">{formatDate(comment.created_at)}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {showReplyForm && (
-            <div className="_feed_inner_comment_box" style={{ marginTop: '10px' }}>
-              <form onSubmit={handleReply} className="_feed_inner_comment_box_form">
-                <div className="_feed_inner_comment_box_content">
-                  <div className="_feed_inner_comment_box_content_txt">
-                    <textarea
-                      className="form-control _comment_textarea"
-                      placeholder="Write a reply"
-                      value={replyContent}
-                      onChange={(e) => setReplyContent(e.target.value)}
-                      style={{ minHeight: '60px' }}
-                    />
-                  </div>
-                </div>
-                <button type="submit" className="btn btn-primary btn-sm _mar_t8">
-                  Post Reply
-                </button>
-              </form>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Render Replies */}
-      {comment.replies && comment.replies.length > 0 && (
-        <div style={{ marginTop: '10px' }}>
-          {comment.replies.map((reply) => (
-            <Comment
-              key={reply.id}
-              comment={reply}
-              postId={postId}
-              onUpdate={onUpdate}
-              currentUser={currentUser}
-              isReply={true}
-            />
-          ))}
-        </div>
-      )}
+        <div
+  style={{
+    marginLeft: isReply ? '40px' : '0',
+    marginBottom: '12px',
+  }}
+>
+  <div
+    style={{
+      padding: '10px 14px',
+      borderRadius: '18px',
+      backgroundColor: isReply ? '#f0f2f5' : '#fff',
+      border: '1px solid #e0e0e0',
+    }}
+  >
+    {/* Comment Author */}
+    <div style={{ marginBottom: '4px' }}>
+      <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '600', color: '#050505' }}>
+        {comment.author.full_name}
+      </h4>
     </div>
+
+    {/* Comment Text */}
+    <div style={{ marginBottom: '6px', fontSize: '14px', color: '#050505' }}>
+      {comment.content}
+    </div>
+
+    {/* Like count pill */}
+    {comment.likes_count > 0 && (
+      <div
+        onClick={() => setShowLikes(!showLikes)}
+        style={{
+          display: 'inline-block',
+          padding: '2px 8px',
+          borderRadius: '12px',
+          backgroundColor: '#e4e6eb',
+          color: '#385898',
+          fontSize: '12px',
+          cursor: 'pointer',
+          marginBottom: '6px',
+        }}
+      >
+        {comment.likes_count} {comment.likes_count === 1 ? 'Like' : 'Likes'}
+      </div>
+    )}
+
+    {showLikes && comment.likes && comment.likes.length > 0 && (
+      <div style={{ fontSize: '12px', color: '#65676b', marginTop: '2px', marginBottom: '6px' }}>
+        Liked by: {comment.likes.map((like) => like.user.full_name).join(', ')}
+      </div>
+    )}
+
+    {/* Actions: Like, Reply, Timestamp */}
+    <div style={{ display: 'flex', gap: '16px', fontSize: '12px', color: '#65676b' }}>
+      <span
+        style={{ cursor: 'pointer', color: comment.is_liked ? '#1877f2' : '#65676b' }}
+        onClick={handleLike}
+      >
+        {comment.is_liked ? 'Liked' : 'Like'}
+      </span>
+
+      {!isReply && (
+        <span
+          style={{ cursor: 'pointer' }}
+          onClick={() => setShowReplyForm(!showReplyForm)}
+        >
+          Reply
+        </span>
+      )}
+
+      <span>{formatDate(comment.created_at)}</span>
+    </div>
+
+    {/* Reply form */}
+    {showReplyForm && (
+      <div style={{ marginTop: '8px' }}>
+        <textarea
+          className="form-control"
+          placeholder="Write a reply..."
+          value={replyContent}
+          onChange={(e) => setReplyContent(e.target.value)}
+          style={{ minHeight: '50px', resize: 'none', marginBottom: '4px' }}
+        />
+        <button type="submit" className="btn btn-primary btn-sm" onClick={handleReply}>
+          Post Reply
+        </button>
+      </div>
+    )}
+  </div>
+
+  {/* Replies */}
+  {comment.replies && comment.replies.length > 0 && (
+    <div style={{ marginTop: '8px' }}>
+      {comment.replies.map((reply) => (
+        <Comment
+          key={reply.id}
+          comment={reply}
+          postId={postId}
+          onUpdate={onUpdate}
+          currentUser={currentUser}
+          isReply={true}
+        />
+      ))}
+    </div>
+  )}
+</div>
+
+
   );
 };
 
