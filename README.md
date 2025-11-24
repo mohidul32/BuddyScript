@@ -1,4 +1,4 @@
-# BuddyScript
+# Buddy Script
 
 A full-stack social media application built with **Django** (backend), **React** (frontend) and **MySQL** (database) featuring authentication, feeds, posts, comments, likes, and more.
 
