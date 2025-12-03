@@ -65,7 +65,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get('MYSQL_PUBLIC_URL'),  # use Railway public URL
+        os.environ.get('MYSQL_PUBLIC_URL', 'mysql://root:DYYRvegHbzbMnzDWONtYuLWQyZboAbhf@gondola.proxy.rlwy.net:34081/railway'),  # use Railway public URL
         conn_max_age=600
     )
 }
