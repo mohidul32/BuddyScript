@@ -9,7 +9,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this-in-produc
 
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,6 +41,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'buddyscript_backend.urls'
+
+INSTALLED_APPS += ['corsheaders']
+MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
+]
 
 TEMPLATES = [
     {
@@ -75,15 +81,26 @@ WSGI_APPLICATION = 'buddyscript_backend.wsgi.application'
 #         }
 #     }
 # }
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'buddyscript_db',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'buddyscript_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': 'railway',  # MYSQLDATABASE
+        'USER': 'root',     # MYSQLUSER
+        'PASSWORD': 'guFUQrfEUpHDgqsxjyWOPNfJaxwxrhvU',  # MYSQL_ROOT_PASSWORD
+        'HOST': 'db-1234.railway.app',  # RAILWAY_PRIVATE_DOMAIN
+        'PORT': '3306',     # MYSQLPORT
     }
 }
 
