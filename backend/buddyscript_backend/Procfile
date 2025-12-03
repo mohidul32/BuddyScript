@@ -1,0 +1,2 @@
+web: gunicorn buddyscript_backend.wsgi
+
