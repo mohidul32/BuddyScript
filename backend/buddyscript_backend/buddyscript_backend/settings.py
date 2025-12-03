@@ -66,6 +66,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'buddyscript_backend.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+
 # Database
 # DATABASES = {
 #     'default': {
@@ -93,16 +101,16 @@ WSGI_APPLICATION = 'buddyscript_backend.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',  # MYSQLDATABASE
-        'USER': 'root',     # MYSQLUSER
-        'PASSWORD': 'guFUQrfEUpHDgqsxjyWOPNfJaxwxrhvU',  # MYSQL_ROOT_PASSWORD
-        'HOST': 'db-1234.railway.app',  # RAILWAY_PRIVATE_DOMAIN
-        'PORT': '3306',     # MYSQLPORT
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'railway',  # MYSQLDATABASE
+#         'USER': 'root',     # MYSQLUSER
+#         'PASSWORD': 'guFUQrfEUpHDgqsxjyWOPNfJaxwxrhvU',  # MYSQL_ROOT_PASSWORD
+#         'HOST': 'db-1234.railway.app',  # RAILWAY_PRIVATE_DOMAIN
+#         'PORT': '3306',     # MYSQLPORT
+#     }
+# }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
