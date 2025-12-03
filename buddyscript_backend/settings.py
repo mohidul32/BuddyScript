@@ -61,16 +61,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'buddyscript_backend.wsgi.application'
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('MYSQLDATABASE', default='railway'),
-        'USER': config('MYSQLUSER', default='root'),
-        'PASSWORD': config('MYSQLPASSWORD', default=''),
-        'HOST': config('MYSQLHOST', default='mysql.railway.internal'),
-        'PORT': config('MYSQLPORT', default='3306'),
-    }
+    'default': dj_database_url.parse(
+        os.environ.get('MYSQL_PUBLIC_URL'),  # use Railway public URL
+        conn_max_age=600
+    )
 }
+
 
 # DATABASES = {
 #     'default': {
