@@ -63,10 +63,21 @@ WSGI_APPLICATION = 'buddyscript_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('MYSQLDATABASE', default='railway'),
+        'USER': config('MYSQLUSER', default='root'),
+        'PASSWORD': config('MYSQLPASSWORD', default=''),
+        'HOST': config('MYSQLHOST', default='mysql.railway.internal'),
+        'PORT': config('MYSQLPORT', default='3306'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Database
