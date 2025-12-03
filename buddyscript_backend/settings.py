@@ -43,11 +43,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'buddyscript_backend.urls'
 
 
-MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000"
-]
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
