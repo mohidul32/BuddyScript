@@ -4,7 +4,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer, UserSerializer
 from rest_framework.views import APIView
 from django.utils import timezone
 from django.db.models import Q, Count
@@ -97,7 +96,7 @@ class UserSearchView(generics.ListAPIView):
                 Q(last_name__icontains=query) |
                 Q(email__icontains=query)
             ).exclude(id=self.request.user.id)[:20]
-        return User.objects.none()
+        return User.objects.none().order_by('first_name')
 
 
 # Friendship Views
@@ -196,7 +195,7 @@ class FriendRequestListView(generics.ListAPIView):
         return Friendship.objects.filter(
             to_user=self.request.user,
             status='pending'
-        ).select_related('from_user')
+        ).select_related('from_user').order_by('-created_at')
 
 
 class FriendsListView(generics.ListAPIView):

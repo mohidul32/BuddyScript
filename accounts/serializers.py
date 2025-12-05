@@ -41,6 +41,20 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 
+    def validate_email(self, value):
+        if User.objects.filter(email__iexact=value).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        return value
+
+    def validate_first_name(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("First name cannot be empty.")
+        return value
+
+    def validate_last_name(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Last name cannot be empty.")
+        return value
 
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
@@ -65,10 +79,9 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.get_full_name()
 
     def get_profile_picture_url(self, obj):
-        if obj.profile_picture:
+        if obj.profile_picture and hasattr(obj.profile_picture, 'url'):
             request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.profile_picture.url)
+            return request.build_absolute_uri(obj.profile_picture.url) if request else obj.profile_picture.url
         return None
 
     def get_cover_photo_url(self, obj):
@@ -111,6 +124,11 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'profile_picture', 'cover_photo',
             'location', 'website'
         )
+
+    def validate_bio(self, value):
+        if len(value) > 500:
+            raise serializers.ValidationError("Bio cannot exceed 500 characters.")
+        return value
 
 
 class FriendshipSerializer(serializers.ModelSerializer):
