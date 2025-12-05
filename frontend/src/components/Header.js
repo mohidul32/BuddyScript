@@ -56,7 +56,7 @@ const Header = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 const query = e.target.search.value;
-                if (query) navigate(`/find-friends?q=${query}`);
+                // if (query) navigate(`/find-friends?q=${query}`);
               }}
             >
               <svg className="_header_form_svg" xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" viewBox="0 0 17 17">
@@ -124,7 +124,7 @@ const Header = () => {
                   </div>
                   <div className="_nav_profile_dropdown_info_txt">
                     <h4 className="_nav_dropdown_title">{user?.full_name}</h4>
-                    <Link to="/profile" className="_nav_drop_profile">
+                    <Link to="/profile" className="_nav_drop_profile" onClick={(e) => e.preventDefault()}>
                       View Profile
                     </Link>
                   </div>
@@ -132,7 +132,7 @@ const Header = () => {
                 <hr />
                 <ul className="_nav_dropdown_list">
                   <li className="_nav_dropdown_list_item">
-                    <Link to="/profile/edit" className="_nav_dropdown_link">
+                    <Link to="/profile/edit" className="_nav_dropdown_link" onClick={(e) => e.preventDefault()}>
                       <div className="_nav_drop_info">
                         <span>⚙️</span>
                         Settings
@@ -140,7 +140,7 @@ const Header = () => {
                     </Link>
                   </li>
                   <li className="_nav_dropdown_list_item">
-                    <Link to="/find-friends" className="_nav_dropdown_link">
+                    <Link to="/find-friends" className="_nav_dropdown_link" onClick={(e) => e.preventDefault()}>
                       <div className="_nav_drop_info">
                         <span>👥</span>
                         Find Friends
