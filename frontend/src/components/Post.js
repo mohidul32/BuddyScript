@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { postAPI, commentAPI } from '../services/api';
 import Comment from './Comment';
 
-const Post = ({ post, onUpdate, currentUser }) => {
+const Post = ({ post, onLikeToggle, onAddComment, currentUser }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const [showLikes, setShowLikes] = useState(false);
 
   const handleLike = async () => {
     try {
-      await postAPI.toggleLike(post.id);
-      onUpdate();
+      const response = await postAPI.toggleLike(post.id);
+      onLikeToggle(post.id, response.data.liked, response.data.likes_count);
     } catch (error) {
       console.error('Error toggling like:', error);
     }
@@ -21,9 +21,9 @@ const Post = ({ post, onUpdate, currentUser }) => {
     if (!commentContent.trim()) return;
 
     try {
-      await commentAPI.createComment(post.id, commentContent);
+      const response = await commentAPI.createComment(post.id, commentContent);
       setCommentContent('');
-      onUpdate();
+      onAddComment(post.id, response.data);
       setShowComments(true);
     } catch (error) {
       console.error('Error creating comment:', error);
@@ -139,7 +139,6 @@ const Post = ({ post, onUpdate, currentUser }) => {
                 key={comment.id}
                 comment={comment}
                 postId={post.id}
-                onUpdate={onUpdate}
                 currentUser={currentUser}
               />
             ))}

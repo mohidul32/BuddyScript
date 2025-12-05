@@ -100,8 +100,29 @@ const Feed = () => {
                             <Post
                               key={post.id}
                               post={post}
-                              onUpdate={handlePostUpdate}
                               currentUser={user}
+                              onLikeToggle={(postId, liked, likesCount) => {
+                                setPosts((prevPosts) =>
+                                  prevPosts.map((p) =>
+                                    p.id === postId
+                                      ? { ...p, is_liked: liked, likes_count: likesCount }
+                                      : p
+                                  )
+                                );
+                              }}
+                              onAddComment={(postId, newComment) => {
+                                setPosts((prevPosts) =>
+                                  prevPosts.map((p) =>
+                                    p.id === postId
+                                      ? {
+                                          ...p,
+                                          comments: [newComment, ...(p.comments || [])],
+                                          comments_count: p.comments_count + 1,
+                                        }
+                                      : p
+                                  )
+                                );
+                              }}
                             />
                           ))
                         )}
