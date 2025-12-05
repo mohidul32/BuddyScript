@@ -125,6 +125,7 @@ const Register = () => {
                           value={formData.email}
                           onChange={handleChange}
                           required
+                          autoComplete="off"
                         />
                       </div>
                     </div>
@@ -138,6 +139,7 @@ const Register = () => {
                           value={formData.password}
                           onChange={handleChange}
                           required
+                          autoComplete="new-password"
                         />
                       </div>
                     </div>
