@@ -38,6 +38,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "buddyscript_backend.middleware.request_logger.RequestLoggerMiddleware",
+    "buddyscript_backend.middleware.security_headers.SecurityHeadersMiddleware",
 ]
 
 ROOT_URLCONF = 'buddyscript_backend.urls'
