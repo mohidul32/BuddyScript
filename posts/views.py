@@ -1,13 +1,26 @@
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q, Prefetch
 from .models import Post, PostLike, Comment, CommentLike
 from .serializers import (
     PostSerializer,
     PostCreateSerializer,
-    CommentSerializer
+    CommentSerializer,
+    PostLikeSerializer,
+    CommentLikeSerializer
 )
+
+class CommentPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'limit'
+    max_page_size = 20
+
+class LikePagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'limit'
+    max_page_size = 50
 
 
 class PostListCreateView(generics.ListCreateAPIView):
@@ -96,6 +109,7 @@ class PostLikeToggleView(APIView):
 class CommentListCreateView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = CommentPagination
 
     def get_queryset(self):
         post_id = self.kwargs.get('post_id')
@@ -162,3 +176,22 @@ class CommentLikeToggleView(APIView):
             'liked': True,
             'likes_count': comment.likes_count
         })
+
+class PostLikesListView(generics.ListAPIView):
+    serializer_class = PostLikeSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = LikePagination
+
+    def get_queryset(self):
+        post_id = self.kwargs.get('post_id')
+        return PostLike.objects.filter(post_id=post_id).select_related('user')
+
+
+class CommentLikesListView(generics.ListAPIView):
+    serializer_class = CommentLikeSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = LikePagination
+
+    def get_queryset(self):
+        comment_id = self.kwargs.get('comment_id')
+        return CommentLike.objects.filter(comment_id=comment_id).select_related('user')
