@@ -63,14 +63,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'buddyscript_backend.wsgi.application'
 
-import dj_database_url
-
-DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get('MYSQL_PUBLIC_URL', 'mysql://root:DYYRvegHbzbMnzDWONtYuLWQyZboAbhf@gondola.proxy.rlwy.net:34081/railway'),  # use Railway public URL
-        conn_max_age=600
-    )
-}
+# import dj_database_url
+#
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         os.environ.get('MYSQL_PUBLIC_URL', 'mysql://root:DYYRvegHbzbMnzDWONtYuLWQyZboAbhf@gondola.proxy.rlwy.net:34081/railway'),  # use Railway public URL
+#         conn_max_age=600
+#     )
+# }
 
 
 # DATABASES = {
@@ -97,16 +97,16 @@ DATABASES = {
 #     }
 # }
 #
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'buddyscript_db',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'buddyscript_db',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -186,14 +186,14 @@ SIMPLE_JWT = {
 }
 
 # CORS Settings
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",
-#     "http://127.0.0.1:3000",
-# ]
-
 CORS_ALLOWED_ORIGINS = [
-    "https://buddy-script-three.vercel.app"
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     "https://buddy-script-three.vercel.app"
+# ]
 
 CORS_ALLOW_CREDENTIALS = True
 
