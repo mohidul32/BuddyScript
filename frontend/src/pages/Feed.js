@@ -50,6 +50,10 @@ const Feed = () => {
     fetchPosts(nextPage);
   };
 
+  const handlePostDelete = (postId) => {
+    setPosts((prevPosts) => prevPosts.filter((p) => p.id !== postId));
+  };
+
   return (
     <div className="_layout _layout_main_wrapper">
       <div className="_main_layout">
@@ -101,6 +105,7 @@ const Feed = () => {
                               key={post.id}
                               post={post}
                               currentUser={user}
+                              onDelete={handlePostDelete}
                               onLikeToggle={(postId, liked, likesCount) => {
                                 setPosts((prevPosts) =>
                                   prevPosts.map((p) =>

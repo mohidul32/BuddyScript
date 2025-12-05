@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { postAPI, commentAPI } from '../services/api';
 import Comment from './Comment';
 
-const Post = ({ post, onLikeToggle, onAddComment, currentUser }) => {
+const Post = ({ post, onLikeToggle, onAddComment, currentUser, onDelete }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const [showLikes, setShowLikes] = useState(false);
+  const [showOptions, setShowOptions] = useState(false); // For three-dot menu
 
   const handleLike = async () => {
     try {
@@ -46,9 +47,66 @@ const Post = ({ post, onLikeToggle, onAddComment, currentUser }) => {
     return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
   };
 
+  const handleDelete = async () => {
+    if (post.author.id !== currentUser.id) return;
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        await postAPI.deletePost(post.id);
+        onDelete(post.id);
+      } catch (error) {
+        console.error('Error deleting post:', error);
+      }
+    }
+  };
+
   return (
     <div className="_feed_inner_timeline_post_area _b_radious6 _padd_b24 _padd_t24 _mar_b16">
-      <div className="_feed_inner_timeline_content _padd_r24 _padd_l24">
+      <div className="_feed_inner_timeline_content _padd_r24 _padd_l24" style={{ position: 'relative' }}>
+        {/* Three-dot menu */}
+        <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+          <button
+            onClick={() => setShowOptions(!showOptions)}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '20px',
+            }}
+          >
+            ⋮
+          </button>
+          {showOptions && (
+            <div style={{
+              position: 'absolute',
+              right: 0,
+              top: '25px',
+              background: '#fff',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              minWidth: '120px',
+              zIndex: 10,
+              boxShadow: '0px 4px 8px rgba(0,0,0,0.1)'
+            }}>
+              <button
+                onClick={handleDelete}
+                disabled={post.author.id !== currentUser.id}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  padding: '8px 12px',
+                  border: 'none',
+                  background: 'transparent',
+                  cursor: post.author.id === currentUser.id ? 'pointer' : 'not-allowed',
+                  color: post.author.id === currentUser.id ? '#333' : '#999',
+                  textAlign: 'left',
+                }}
+              >
+                Delete Post
+              </button>
+            </div>
+          )}
+        </div>
+
         <div className="_feed_inner_timeline_post_top">
           <div className="_feed_inner_timeline_post_box">
             <div className="_feed_inner_timeline_post_box_txt">
@@ -73,7 +131,7 @@ const Post = ({ post, onLikeToggle, onAddComment, currentUser }) => {
 
       <div className="_feed_inner_timeline_total_reacts _padd_r24 _padd_l24 _mar_b26">
         <div className="_feed_inner_timeline_total_reacts_txt">
-          <p className="_feed_inner_timeline_total_reacts_para1" 
+          <p className="_feed_inner_timeline_total_reacts_para1"
            style={{ display: 'inline-block', cursor: 'pointer', padding: '4px 10px', borderRadius: '20px', backgroundColor: '#f0f2f5', color: '#385898', fontWeight: '500', fontSize: '14px' }}
            >
             <span onClick={() => setShowLikes(!showLikes)}>
