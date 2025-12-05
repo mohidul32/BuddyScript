@@ -1,7 +1,7 @@
 # Buddy Script
 
-A full-stack social media application built with **Django** (backend), **React** (frontend) and **MySQL** (database) featuring authentication, feeds, posts, comments, likes, and more.  
-**Live Demo:** [Live](https://buddy-script-three.vercel.app/login)
+A full-stack social media application built with **Django** (backend), **React** (frontend) and **MySQL** (database) featuring authentication, feeds, posts, comments, likes, and more.
+
 ---
 
 ## Frontend: Implement Auth, Feed, Post, and Comment functionality
