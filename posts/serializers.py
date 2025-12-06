@@ -51,22 +51,22 @@ class CommentSerializer(serializers.ModelSerializer):
             return CommentSerializer(replies, many=True, context=self.context).data
         return []
 
-    def validate_content(self, value):
-        if not value.strip():
-            raise serializers.ValidationError("Content cannot be empty.")
-        if len(value) > 1000:
-            raise serializers.ValidationError("Content too long (max 1000 characters).")
-        return value
-
-    def validate(self, data):
-        parent = data.get('parent')
-        post = data.get('post')
-
-        if parent and parent.post != post:
-            raise serializers.ValidationError("Parent comment must belong to the same post.")
-
-        if parent and parent.parent:
-            raise serializers.ValidationError("Nested replies beyond one level are not allowed.")
+    # def validate_content(self, value):
+    #     if not value.strip():
+    #         raise serializers.ValidationError("Content cannot be empty.")
+    #     if len(value) > 1000:
+    #         raise serializers.ValidationError("Content too long (max 1000 characters).")
+    #     return value
+    #
+    # def validate(self, data):
+    #     parent = data.get('parent')
+    #     post = data.get('post')
+    #
+    #     if parent and parent.post != post:
+    #         raise serializers.ValidationError("Parent comment must belong to the same post.")
+    #
+    #     if parent and parent.parent:
+    #         raise serializers.ValidationError("Nested replies beyond one level are not allowed.")
 
         return data
 
